@@ -14,12 +14,8 @@
     <meta name="googlebot" content="index, follow, max-image-preview:large">
     <meta name="title" content="Wedding Della & Arsyad">
     <meta name="description" content="Wedding Della & Arsyad">
-    <!-- <meta name="keywords"
-        content="undangan, wedding, undangan digital, undangan online, wedding invitation, template undangan, template undangan pernikahan, undangan pernikahan, template undangan online, wedding invitation github, template website, template website undangan pernikahan"> -->
     <meta property="og:title" content="Wedding Della & Arsyad">
     <meta property="og:description" content="Wedding Della & Arsyad">
-    <!-- <meta property="og:keywords"
-        content="undangan, wedding, undangan digital, undangan online, wedding invitation, template undangan, template undangan pernikahan, undangan pernikahan, template undangan online, wedding invitation github, template website, template website undangan pernikahan"> -->
     <meta property="og:image" content="https://cdn.discordapp.com/attachments/1126797485277458445/1424657351197069352/bg2.webp?ex=68e4bf0d&is=68e36d8d&hm=f9fb0180e3088b871152e0942596c601d88e1510839083412eec4d56af528a29&">
     <meta property="og:image:secure_url" content="https://cdn.discordapp.com/attachments/1126797485277458445/1424657351197069352/bg2.webp?ex=68e4bf0d&is=68e36d8d&hm=f9fb0180e3088b871152e0942596c601d88e1510839083412eec4d56af528a29&">
     <meta property="og:image:type" content="image/webp">
@@ -96,7 +92,7 @@
 
 <!-- <body data-audio="./assets/music/pure-love-304010.mp3" data-confetti="true" data-time="2025-11-08 08:00:00"> -->
 
-<body data-confetti="false" data-time="2025-11-08 08:00:00">
+<body data-key="d9faced3377732b0edf19e90d1bde0cd5de04801c75eb41743" data-url="https://api.ulems.my.id/" data-confetti="false" data-time="2025-11-08 08:00:00">
 
     <!-- Root Invitation -->
     <div class="row m-0 p-0 opacity-0" id="root">
@@ -336,7 +332,7 @@
                                     style="width: 3rem; height: 3rem; background-color: limegreen; margin-left: -1rem;">
                                 </div> -->
                             </div>
-                            <p class="font-lora" style="font-size: 0.95rem;">Busana batik dan bersepatu.</p>
+                            <p class="font-lora" style="font-size: 0.95rem;">Busana bebas sopan dan bersepatu.</p>
                         </div>
 
                         <div class="py-2" data-aos="fade-down" data-aos-duration="1500">
@@ -445,6 +441,51 @@
                     </div>
                 </section>
 
+                <!-- Comment -->
+                <section class="bg-white-black my-0 pb-0 pt-3" id="comment">
+                    <div class="container">
+                        <div class="border rounded-5 shadow p-3 mb-2">
+                            <h2 class="font-darleston text-center mt-2 mb-4" style="font-size: 2.25rem;">Ucapan &amp; Doa</h2>
+
+                            <div class="mb-3">
+                                <label for="form-name" class="font-lora form-label my-1"><i class="fa-solid fa-person me-2"></i>Nama</label>
+                                <input type="text" class="font-lora form-control shadow-sm rounded-4" id="form-name" minlength="2" maxlength="50" placeholder="Isikan Nama Anda" autocomplete="name" data-offline-disabled="false">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="form-presence" class="font-lora form-label my-1"><i class="fa-solid fa-person-circle-question me-2"></i>Presensi</label>
+                                <select class="font-lora form-select shadow-sm rounded-4" id="form-presence" autocomplete="off" data-offline-disabled="false">
+                                    <option value="0" selected>Konfirmasi Presensi</option>
+                                    <option value="1">&#9989; Datang</option>
+                                    <option value="2">&#10060; Berhalangan</option>
+                                </select>
+                            </div>
+
+                            <div class="d-block mb-3" id="comment-form-default">
+                                <label for="form-comment" class="font-lora form-label my-1"><i class="fa-solid fa-comment me-2"></i>Ucapan &amp; Doa</label>
+                                <div class="position-relative">
+                                    <button class="btn btn-secondary btn-sm rounded-4 shadow-sm me-1 my-1 position-absolute bottom-0 end-0" onclick="undangan.comment.gif.open(undangan.comment.gif.default)" aria-label="button gif" data-offline-disabled="false"><i class="fa-solid fa-photo-film"></i></button>
+                                    <textarea class="font-lora form-control shadow-sm rounded-4" id="form-comment" rows="4" minlength="1" maxlength="1000" placeholder="Tulis Ucapan dan Doa" autocomplete="off" data-offline-disabled="false"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="d-none mb-3" id="gif-form-default"></div>
+
+                            <div class="d-grid">
+                                <button class="font-lora btn btn-primary btn-sm rounded-4 shadow m-1" onclick="undangan.comment.send(this)" data-offline-disabled="false">
+                                    <i class="fa-solid fa-paper-plane me-2"></i>Send
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Comments -->
+                        <div class="py-3" id="comments" data-loading="false"></div>
+
+                        <!-- Pagination -->
+                        <nav class="d-flex d-none justify-content-center mt-1 mb-0" id="pagination"></nav>
+                    </div>
+                </section>
+
                 <!-- Wave Separator -->
                 <div class="svg-wrapper">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="color-theme-svg no-gap-bottom">
@@ -487,6 +528,12 @@
                         <a class="nav-link" href="#gallery">
                             <i class="fa-solid fa-images"></i>
                             <span class="font-lora d-block" style="font-size: 0.7rem;">Galeri</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#comment">
+                            <i class="fa-solid fa-comments"></i>
+                            <span class="font-lora d-block" style="font-size: 0.7rem;">Ucapan</span>
                         </a>
                     </li>
                 </ul>
@@ -539,6 +586,28 @@
         </div>
     </div>
 
+    <!-- Modal Image -->
+    <div class="modal fade" id="modal-image" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border border-0">
+                <div class="modal-body p-0">
+                    <div class="d-flex position-absolute top-0 end-0">
+                        <a class="btn d-flex justify-content-center align-items-center bg-overlay-auto p-2 m-1 rounded-circle border shadow-sm z-1" role="button" target="_blank" href="./assets/images/placeholder.webp" id="button-modal-click">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                        <button class="btn d-flex justify-content-center align-items-center bg-overlay-auto p-2 m-1 rounded-circle border shadow-sm z-1" id="button-modal-download">
+                            <i class="fa-solid fa-download"></i>
+                        </button>
+                        <button class="btn d-flex justify-content-center align-items-center bg-overlay-auto p-2 m-1 rounded-circle border shadow-sm z-1" data-bs-dismiss="modal">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    </div>
+
+                    <img src="./assets/images/backup/placeholder.webp" class="img-fluid w-100 rounded-4 cursor-pointer" fetchpriority="high" decoding="async" alt="image" id="show-modal-image">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

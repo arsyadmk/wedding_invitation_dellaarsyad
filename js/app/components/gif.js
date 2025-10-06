@@ -224,11 +224,11 @@ export const gif = (() => {
         uuid = util.escapeHtml(uuid);
 
         return `
-        <label for="gif-search-${uuid}" class="form-label my-1"><i class="fa-solid fa-photo-film me-2"></i>Gif</label>
+        <label for="gif-search-${uuid}" class="font-lora form-label my-1"><i class="fa-solid fa-photo-film me-2"></i>Gif</label>
 
         <div class="d-flex mb-3" id="gif-search-nav-${uuid}">
             <button class="btn btn-secondary btn-sm rounded-4 shadow-sm me-1 my-1" onclick="undangan.comment.gif.back(this, '${uuid}')" data-offline-disabled="false"><i class="fa-solid fa-arrow-left"></i></button>
-            <input type="text" name="gif-search" id="gif-search-${uuid}" autocomplete="on" class="form-control shadow-sm rounded-4" placeholder="Search for a GIF on Tenor" data-offline-disabled="false">
+            <input type="text" name="gif-search" id="gif-search-${uuid}" autocomplete="on" class="font-lora form-control shadow-sm rounded-4" placeholder="Search for a GIF on Tenor" data-offline-disabled="false">
         </div>
 
         <div class="position-relative">

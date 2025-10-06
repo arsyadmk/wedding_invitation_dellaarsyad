@@ -1,12 +1,16 @@
+import { video } from './video.js';
+import { image } from './image.js';
 import { audio } from './audio.js';
 import { progress } from './progress.js';
 import { util } from '../../common/util.js';
+import { bs } from '../../libs/bootstrap.js';
 import { loader } from '../../libs/loader.js';
 import { theme } from '../../common/theme.js';
 import { lang } from '../../common/language.js';
 import { storage } from '../../common/storage.js';
 import { session } from '../../common/session.js';
 import { offline } from '../../common/offline.js';
+import { comment } from '../components/comment.js';
 import * as confetti from '../../libs/confetti.js';
 
 export const guest = (() => {
@@ -172,6 +176,34 @@ export const guest = (() => {
     };
 
     /**
+     * @param {HTMLImageElement} img
+     * @returns {void}
+     */
+    const modal = (img) => {
+        document.getElementById('button-modal-click').setAttribute('href', img.src);
+        document.getElementById('button-modal-download').setAttribute('data-src', img.src);
+
+        const i = document.getElementById('show-modal-image');
+        i.src = img.src;
+        i.width = img.width;
+        i.height = img.height;
+        bs.modal('modal-image').show();
+    };
+
+    /**
+     * @returns {void}
+     */
+    const modalImageClick = () => {
+        document.getElementById('show-modal-image').addEventListener('click', (e) => {
+            const abs = e.currentTarget.parentNode.querySelector('.position-absolute');
+
+            abs.classList.contains('d-none')
+                ? abs.classList.replace('d-none', 'd-flex')
+                : abs.classList.replace('d-flex', 'd-none');
+        });
+    };
+
+    /**
      * @param {HTMLDivElement} div 
      * @returns {void}
      */
@@ -222,10 +254,10 @@ export const guest = (() => {
         const url = new URL('https://calendar.google.com/calendar/render');
         const data = new URLSearchParams({
             action: 'TEMPLATE',
-            text: 'The Wedding of Wahyu and Riski',
-            dates: `${formatDate('2023-03-15 10:00')}/${formatDate('2023-03-15 11:00')}`,
+            text: 'The Wedding of Della and Arsyad',
+            dates: `${formatDate('2025-11-08 11:00')}/${formatDate('2025-11-08 13:00')}`,
             details: 'Tanpa mengurangi rasa hormat, kami mengundang Anda untuk berkenan menghadiri acara pernikahan kami. Terima kasih atas perhatian dan doa restu Anda, yang menjadi kebahagiaan serta kehormatan besar bagi kami.',
-            location: 'RT 10 RW 02, Desa Pajerukan, Kec. Kalibagor, Kab. Banyumas, Jawa Tengah 53191.',
+            location: 'ZEITo Kopi & Teras Sore Jontro, Wedarijaksa, Pati Regency, Central Java 59152.',
             ctz: config.get('tz'),
         });
 
@@ -261,6 +293,7 @@ export const guest = (() => {
         animateSvg();
         countDownDate();
         showGuestName();
+        modalImageClick();
         normalizeArabicFont();
         buildGoogleCalendar();
 
@@ -282,11 +315,14 @@ export const guest = (() => {
     const domLoaded = () => {
         lang.init();
         offline.init();
+        comment.init();
         progress.init();
 
         config = storage('config');
         information = storage('information');
 
+        const vid = video.init();
+        const img = image.init();
         const aud = audio.init();
         const lib = loaderLibs();
         const token = document.body.getAttribute('data-key');
@@ -295,8 +331,16 @@ export const guest = (() => {
         window.addEventListener('resize', util.debounce(slide));
         document.addEventListener('undangan.progress.done', () => booting());
         document.addEventListener('hide.bs.modal', () => document.activeElement?.blur());
+        document.getElementById('button-modal-download').addEventListener('click', (e) => {
+            img.download(e.currentTarget.getAttribute('data-src'));
+        });
 
         if (!token || token.length <= 0) {
+            document.getElementById('comment')?.remove();
+            document.querySelector('a.nav-link[href="#comment"]')?.closest('li.nav-item')?.remove();
+
+            vid.load();
+            img.load();
             aud.load();
             lib.load({ confetti: document.body.getAttribute('data-confetti') === 'true' });
         }
@@ -321,8 +365,13 @@ export const guest = (() => {
                     img.load();
                 }
 
+                vid.load();
                 aud.load();
                 lib.load({ confetti: data.is_confetti_animation });
+
+                comment.show()
+                    .then(() => progress.complete('comment'))
+                    .catch(() => progress.invalid('comment'));
 
             }).catch(() => progress.invalid('config'));
 
@@ -342,6 +391,7 @@ export const guest = (() => {
             storage('owns').clear();
             storage('likes').clear();
             storage('session').clear();
+            storage('comment').clear();
         }
 
         document.addEventListener('DOMContentLoaded', domLoaded);
@@ -349,8 +399,10 @@ export const guest = (() => {
         return {
             util,
             theme,
+            comment,
             guest: {
                 open,
+                modal,
                 showStory,
                 closeInformation,
             },

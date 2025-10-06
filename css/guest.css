@@ -15,6 +15,18 @@ html {
     font-family: 'Sacramento', cursive !important;
 }
 
+.font-amiri {
+    font-family: 'Amiri', sans-serif;
+}
+
+.font-darleston {
+    font-family: 'Darleston', sans-serif;
+}
+
+.font-lora {
+    font-family: 'Lora', sans-serif;
+}
+
 .font-arabic {
     font-family: 'Noto Naskh Arabic', serif !important;
 }
